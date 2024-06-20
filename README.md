@@ -1,1 +1,8 @@
-# evermuzic-api
+```
+npm install
+npm run dev
+```
+
+```
+npm run deploy
+```

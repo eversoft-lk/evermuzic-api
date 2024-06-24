@@ -12,10 +12,10 @@ compatibility_date = "2023-12-01"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "evermuzic-db"
+database_id = "c506e0d7-a35c-4529-ae10-12cb62de5e96"
 
 # [ai]
 # binding = "AI"

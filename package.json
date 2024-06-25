@@ -8,6 +8,7 @@
     "@prisma/adapter-d1": "^5.15.1",
     "@prisma/client": "^5.15.1",
     "@types/uuid": "^9.0.8",
+    "axios": "^1.7.2",
     "hono": "^4.4.7",
     "prisma": "^5.15.1",
     "uuid": "^10.0.0"

@@ -2,11 +2,53 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String          @id
+  name          String?
+  username      String          @unique
+  email         String          @unique
+  password      String
+  isVerified    Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  playlists     Playlist[]
+  SavedPlaylist SavedPlaylist[]
+}
+
+model SavedPlaylist {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  playlistId String
+  user       User     @relation(fields: [userId], references: [id])
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+}
+
+model Playlist {
+  id            String          @id
+  name          String
+  description   String?
+  likes         Int
+  isPublic      Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  userId        String
+  user          User            @relation(fields: [userId], references: [id])
+  SavedPlaylist SavedPlaylist[]
+  songs         Song[]
+}
+
+model Song {
+  id        Int        @id @default(autoincrement())
+  name      String
+  url       String
+  author    String
+  duration  Float
+  playlists Playlist[]
 }

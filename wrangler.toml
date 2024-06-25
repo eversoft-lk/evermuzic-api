@@ -2,7 +2,7 @@ name = "evermuzic-api"
 compatibility_date = "2023-12-01"
 
 [vars]
-YT_DATA_API = 
+YT_DATA_API = ""
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
@@ -15,7 +15,7 @@ YT_DATA_API =
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "evermuzic-db"
-database_id = 
+database_id = ""
 
 # [ai]
 # binding = "AI"

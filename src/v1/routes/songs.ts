@@ -1,9 +1,9 @@
 import { Hono } from "hono";
-import { Bindings, Song } from "../../types";
+import { Bindings, Song } from "../types";
 import axios from "axios";
 
 // youtube types
-import * as YTTYPES from "../../types/YT";
+import * as YTTYPES from "../types/YT";
 
 const songs = new Hono<{ Bindings: Bindings }>();
 

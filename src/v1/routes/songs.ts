@@ -4,10 +4,23 @@ import axios from "axios";
 
 // youtube types
 import * as YTTYPES from "../types/YT";
+import { searchSongsFromLastFM } from "../functions";
+import { AlbumSearchResponse } from "../types/LAST.FM";
 
 const songs = new Hono<{ Bindings: Bindings }>();
 
 songs.get("/search", async (c) => {
+  const songName = c.req.query("q");
+
+  const { data } = await axios.get<AlbumSearchResponse>(`
+    http://ws.audioscrobbler.com/2.0/?method=album.search&album=${songName}&api_key=${c.env.LAST_FM_API}&format=json
+`);
+  console.log(data);
+
+  return c.json(data);
+});
+
+songs.get("/yt-search", async (c) => {
   // Get song name from queryset
   const songName = c.req.query("q");
   if (!songName?.trim()) {

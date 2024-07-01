@@ -5,22 +5,35 @@ import axios from "axios";
 // youtube types
 import * as YTTYPES from "../types/YT";
 import { searchSongsFromLastFM } from "../functions";
-import { AlbumSearchResponse } from "../types/LAST.FM";
 
-const songs = new Hono<{ Bindings: Bindings }>();
+const app = new Hono<{ Bindings: Bindings }>();
 
-songs.get("/search", async (c) => {
+app.get("/search", async (c) => {
   const songName = c.req.query("q");
+  if (!songName?.trim()) {
+    return c.json(
+      {
+        message: "Invalid Query",
+      },
+      400
+    );
+  }
+  const songs = await searchSongsFromLastFM(songName, c.env.LAST_FM_API);
+  if (!songs) {
+    return c.json(
+      {
+        message: "Error while fetching data",
+      },
+      500
+    );
+  }
 
-  const { data } = await axios.get<AlbumSearchResponse>(`
-    http://ws.audioscrobbler.com/2.0/?method=album.search&album=${songName}&api_key=${c.env.LAST_FM_API}&format=json
-`);
-  console.log(data);
-
-  return c.json(data);
+  return c.json({
+    songs: songs,
+  });
 });
 
-songs.get("/yt-search", async (c) => {
+app.get("/yt-search", async (c) => {
   // Get song name from queryset
   const songName = c.req.query("q");
   if (!songName?.trim()) {
@@ -104,4 +117,4 @@ function parseDuration(isoDuration: string) {
   return `${hours}h ${minutes}m ${seconds}s`;
 }
 
-export const Songs = songs;
+export const Songs = app;

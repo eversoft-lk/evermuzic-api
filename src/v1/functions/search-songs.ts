@@ -39,3 +39,11 @@ export async function searchSongsFromLastFM(
 
   return songs;
 }
+
+export async function getTrendingSongs(apiKey: string) {
+  const { data } = await axios.get(
+    `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${apiKey}&format=json`
+  );
+
+  return data.tracks.track;
+}

@@ -4,9 +4,17 @@ import axios from "axios";
 
 // youtube types
 import * as YTTYPES from "../types/YT";
-import { searchSongsFromLastFM } from "../functions";
+import { getTrendingSongs, searchSongsFromLastFM } from "../functions";
 
 const app = new Hono<{ Bindings: Bindings }>();
+
+app.get("/trending-now", async (c) => {
+  const data = await getTrendingSongs(c.env.LAST_FM_API);
+
+  return c.json({
+    tracks: data,
+  });
+});
 
 app.get("/search", async (c) => {
   const songName = c.req.query("q");

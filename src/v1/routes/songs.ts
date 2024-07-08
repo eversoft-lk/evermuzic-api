@@ -56,7 +56,7 @@ app.get("/yt-search", async (c) => {
   let response: YTTYPES.YouTubeSearchResponse;
   try {
     const { data } = await axios.get<YTTYPES.YouTubeSearchResponse>(
-      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&q=${songName}&key=${c.env.YT_DATA_API}`
+      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&type=video&videoCategoryId=10&q=${songName}&key=${c.env.YT_DATA_API}`
     );
     response = data;
   } catch (e) {
@@ -110,19 +110,16 @@ function parseDuration(isoDuration: string) {
     return "Live";
   }
 
-  const hours = matches[1] ? matches[1].slice(0, -1) : "0";
-  const minutes = matches[2] ? matches[2].slice(0, -1) : "0";
-  const seconds = matches[3] ? matches[3].slice(0, -1) : "0";
+  const hours = matches[1] ? parseInt(matches[1].slice(0, -1)) : 0;
+  const minutes = matches[2] ? parseInt(matches[2].slice(0, -1)) : 0;
+  const seconds = matches[3] ? parseInt(matches[3].slice(0, -1)) : 0;
 
-  if (hours === "0") {
-    return `${minutes}m ${seconds}s`;
-  }
+  const formattedHours = hours > 0 ? `${hours}:` : "";
+  const formattedMinutes =
+    minutes > 0 ? `${minutes}:` : hours > 0 ? "00:" : "0:";
+  const formattedSeconds = seconds > 9 ? seconds : `0${seconds}`;
 
-  if (minutes === "0") {
-    return `${seconds}s`;
-  }
-
-  return `${hours}h ${minutes}m ${seconds}s`;
+  return `${formattedHours}${formattedMinutes}${formattedSeconds}`;
 }
 
 export const Songs = app;

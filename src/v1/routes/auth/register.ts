@@ -1,9 +1,63 @@
 import { Hono } from "hono";
+import { RegisterSchema } from "../../schema";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
+import { PrismaClient } from "@prisma/client";
+import { PrismaD1 } from "@prisma/adapter-d1";
+import { Bindings } from "../../types";
+import { v4 as uuid } from "uuid";
 
-const app = new Hono();
+const app = new Hono<{ Bindings: Bindings }>();
 
-app.post("/register", (c) => {
-    return c.text("Hello from auth route");
+app.post("/register", zValidator("json", RegisterSchema), async (c) => {
+  const adapter = new PrismaD1(c.env.DB);
+  const prisma = new PrismaClient({ adapter });
+
+  type requestType = z.infer<typeof RegisterSchema>;
+  const req = await c.req.json<requestType>();
+
+  const isExists = await prisma.user.findFirst({
+    where: {
+      OR: [
+        {
+          email: req.email,
+        },
+        {
+          username: req.username,
+        },
+      ],
+    },
+  });
+
+  if (isExists) {
+    isExists.password = "undefined";
+
+    return c.json(
+      {
+        message: "User already exists!",
+        user: isExists,
+      },
+      400,
+    );
+  }
+
+  const user = await prisma.user.create({
+    data: {
+      id: uuid(),
+      name: req.name,
+      username: req.username,
+      email: req.email,
+      password: req.password,
+      auth_method_id: 1,
+    },
+  });
+
+  user.password = "undefined";
+  return c.json({
+    status: "success",
+    message: "User created successfully!",
+    user,
+  });
 });
 
 export const Auth = app;

@@ -62,4 +62,4 @@ app.post("/register", zValidator("json", RegisterSchema), async (c) => {
   });
 });
 
-export const Auth = app;
+export const Register = app;

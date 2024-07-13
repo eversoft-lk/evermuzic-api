@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaD1 } from "@prisma/adapter-d1";
 import { Bindings } from "../../types";
 import { v4 as uuid } from "uuid";
+import { hashPassword } from "../../functions";
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -41,13 +42,14 @@ app.post("/register", zValidator("json", RegisterSchema), async (c) => {
     );
   }
 
+  const password = await hashPassword(req.password);
   const user = await prisma.user.create({
     data: {
       id: uuid(),
       name: req.name,
       username: req.username,
       email: req.email,
-      password: req.password,
+      password: password,
       auth_method_id: 1,
     },
   });

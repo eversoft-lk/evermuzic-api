@@ -11,6 +11,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model NotifyRequest {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  isSent    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
 model accesstoken {
   id         BigInt    @id @default(autoincrement())
   token      String

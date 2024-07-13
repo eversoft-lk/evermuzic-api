@@ -4,4 +4,6 @@ export type Bindings = {
   LAST_FM_API: string;
   SPOTIFY_CLIENT_ID: string;
   SPOTIFY_CLIENT_SECRET: string;
+  ACCESS_TOKEN_SECRET: string;
+  REFRESH_TOKEN_SECRET: string;
 };

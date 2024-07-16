@@ -6,4 +6,7 @@ export type Bindings = {
   SPOTIFY_CLIENT_SECRET: string;
   ACCESS_TOKEN_SECRET: string;
   REFRESH_TOKEN_SECRET: string;
+  PAYPAL_CLIENT_ID: string;
+  PAYPAL_CLIENT_SECRET: string;
+  FRONTEND_URL: string;
 };

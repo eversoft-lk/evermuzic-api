@@ -13,5 +13,6 @@ app.route("/v1/artists", V1ROUTES.Artists);
 app.route("/v1/auth", V1ROUTES.Auth);
 app.route("/v1/spotify", V1ROUTES.Spotify);
 app.route("/v1/playlists", V1ROUTES.YTPlaylistSearch);
+app.route("/v1/donate", V1ROUTES.Donate);
 
 export default app;

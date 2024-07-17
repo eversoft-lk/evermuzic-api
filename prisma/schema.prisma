@@ -95,3 +95,11 @@ model Donations {
   amount    Float
   createdAt DateTime @default(now())
 }
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}

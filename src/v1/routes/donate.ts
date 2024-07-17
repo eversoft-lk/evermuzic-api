@@ -54,9 +54,9 @@ app.get("/payment-success", async (c) => {
       },
     });
 
-    return c.redirect(c.env.FRONTEND_URL + "/donate/success");
+    return c.redirect(c.env.FRONTEND_URL + "/donation/success");
   } catch (error) {
-    return c.redirect(c.env.FRONTEND_URL + "/donate");
+    return c.redirect(c.env.FRONTEND_URL + "/donation");
   }
 });
 

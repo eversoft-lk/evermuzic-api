@@ -77,6 +77,7 @@ app.get("/yt-search", async (c) => {
     }
 
     return {
+      id: item.id.videoId,
       name: item.snippet.title,
       artist: item.snippet.channelTitle,
       thumbnail: {

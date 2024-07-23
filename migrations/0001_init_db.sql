@@ -1,4 +1,13 @@
 -- CreateTable
+CREATE TABLE "NotifyRequest" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "isSent" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
 CREATE TABLE "accesstoken" (
     "id" BIGINT NOT NULL PRIMARY KEY,
     "token" TEXT NOT NULL,
@@ -6,12 +15,6 @@ CREATE TABLE "accesstoken" (
     "created_at" DATETIME NOT NULL,
     "used_at" DATETIME,
     CONSTRAINT "accesstoken_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
--- CreateTable
-CREATE TABLE "auth_method" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "method" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -40,6 +43,7 @@ CREATE TABLE "playlistitems" (
     "name" TEXT NOT NULL,
     "artist" TEXT NOT NULL,
     "album" TEXT NOT NULL,
+    "songId" TEXT NOT NULL,
     "added_at" DATETIME NOT NULL,
     "playlist_id" TEXT NOT NULL,
     CONSTRAINT "playlistitems_playlist_id_fkey" FOREIGN KEY ("playlist_id") REFERENCES "playlist" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -51,9 +55,25 @@ CREATE TABLE "user" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "auth_method_id" INTEGER NOT NULL,
-    CONSTRAINT "user_auth_method_id_fkey" FOREIGN KEY ("auth_method_id") REFERENCES "auth_method" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+    "password" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Donations" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "amount" REAL NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
+CREATE TABLE "Feedback" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateIndex
@@ -76,7 +96,4 @@ CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
-
--- CreateIndex
-CREATE INDEX "user_auth_method_id_idx" ON "user"("auth_method_id");
 

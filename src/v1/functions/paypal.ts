@@ -2,7 +2,13 @@ type generateAccessTokenResponse = {
   access_token: string;
 };
 
-export async function createOrder(accessToken: string, amount: number) {
+type Options = {
+  name: string;
+  email: string;
+  amount: number;
+};
+
+export async function createOrder(accessToken: string, options: Options) {
   const response = await fetch(
     "https://api-m.sandbox.paypal.com/v2/checkout/orders",
     {
@@ -17,11 +23,11 @@ export async function createOrder(accessToken: string, amount: number) {
           {
             amount: {
               currency_code: "USD",
-              value: amount.toFixed(2),
+              value: options.amount.toFixed(2),
               breakdown: {
                 item_total: {
                   currency_code: "USD",
-                  value: amount.toFixed(2),
+                  value: options.amount.toFixed(2),
                 },
               },
             },
@@ -31,14 +37,15 @@ export async function createOrder(accessToken: string, amount: number) {
                 quantity: "1",
                 unit_amount: {
                   currency_code: "USD",
-                  value: amount.toFixed(2),
+                  value: options.amount.toFixed(2),
                 },
+                description: "Tharindu Nimesh:tharindunimesh.abc@gmail.com",
               },
             ],
           },
         ],
         application_context: {
-          return_url: "http://localhost:8787/api/v1/donate/payment-success",
+          return_url: `http://localhost:8787/api/v1/donate/payment-success?name=${encodeURIComponent(options.name)}&email=${encodeURIComponent(options.email)}`,
           cancel_url: "http://localhost:3000/donation-cancel",
         },
       }),

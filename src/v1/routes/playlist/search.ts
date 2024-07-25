@@ -32,7 +32,6 @@ app.get("/yt-search", async (c) => {
       400
     );
   }
-  console.log(playlistName);
 
   const { data } = await axios.get<PlaylistSearchResponse>(
     `https://www.googleapis.com/youtube/v3/search?part=snippet&type=playlist&q=${playlistName}&key=${c.env.YT_DATA_API}&maxResults=10`

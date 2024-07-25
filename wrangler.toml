@@ -16,7 +16,7 @@ compatibility_date = "2023-12-01"
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "evermuzic-db"
-database_id = "0cce2cb9-b9c4-4a0f-8ad2-bf3068c5dcc2"
+database_id = "e0037ddf-c976-481c-8e53-dbece65addc6"
 
 # [ai]
 # binding = "AI"

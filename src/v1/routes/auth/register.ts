@@ -50,7 +50,6 @@ app.post("/register", zValidator("json", RegisterSchema), async (c) => {
       username: req.username,
       email: req.email,
       password: password,
-      auth_method_id: 1,
     },
   });
 

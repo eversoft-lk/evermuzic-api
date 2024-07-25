@@ -30,12 +30,6 @@ model accesstoken {
   @@index([user_id])
 }
 
-model auth_method {
-  id     Int    @id @default(autoincrement())
-  method String
-  user   user[]
-}
-
 model favorite {
   id          Int      @id @default(autoincrement())
   playlist_id String
@@ -66,6 +60,7 @@ model playlistitems {
   name        String
   artist      String
   album       String
+  songId      String
   added_at    DateTime
   playlist_id String
   playlist    playlist @relation(fields: [playlist_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -74,18 +69,14 @@ model playlistitems {
 }
 
 model user {
-  id             String        @id
-  name           String
-  email          String        @unique
-  username       String        @unique
-  password       String
-  auth_method_id Int
-  accesstoken    accesstoken[]
-  favorite       favorite[]
-  playlist       playlist[]
-  auth_method    auth_method   @relation(fields: [auth_method_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([auth_method_id])
+  id          String        @id
+  name        String
+  email       String        @unique
+  username    String        @unique
+  password    String
+  accesstoken accesstoken[]
+  favorite    favorite[]
+  playlist    playlist[]
 }
 
 model Donations {

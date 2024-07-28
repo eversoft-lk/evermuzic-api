@@ -91,6 +91,7 @@ app.get("/payment-success", async (c) => {
       },
       data: {
         amount: payment.amount + parseFloat(amount),
+        createdAt: new Date(),
       },
     });
 

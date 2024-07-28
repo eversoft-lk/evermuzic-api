@@ -31,14 +31,16 @@ model accesstoken {
 }
 
 model favorite {
-  id          Int      @id @default(autoincrement())
-  playlist_id String
-  user_id     String
-  created_at  DateTime
-  playlist    playlist @relation(fields: [playlist_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user        user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String
+  image         String
+  playlist_id   String
+  playlist_type Int
+  user_id       String
+  created_at    DateTime
+  user          user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@index([playlist_id])
   @@index([user_id])
 }
 
@@ -48,7 +50,6 @@ model playlist {
   description   String
   likes         Int             @default(0)
   user_id       String
-  favorite      favorite[]
   user          user            @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   playlistitems playlistitems[]
 
@@ -82,9 +83,11 @@ model user {
 model Donations {
   id        Int      @id @default(autoincrement())
   name      String
-  email     String
+  email     String   @unique
   amount    Float
   createdAt DateTime @default(now())
+
+  @@index([email])
 }
 
 model Feedback {

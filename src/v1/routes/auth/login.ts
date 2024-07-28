@@ -34,7 +34,7 @@ app.post("/login", zValidator("json", LoginSchema), async (c) => {
       {
         message: "User not found!",
       },
-      404,
+      404
     );
   }
 
@@ -44,16 +44,16 @@ app.post("/login", zValidator("json", LoginSchema), async (c) => {
       {
         message: "Password is incorrect!",
       },
-      400,
+      400
     );
   }
 
   const payload = {
     id: user.id,
+    name: user.name,
     username: user.username,
     email: user.email,
-    exp: Date.now() + 1000 * 60 * 60 * 24 * 7,
-  }
+  };
 
   const accessToken = await sign(payload, c.env.ACCESS_TOKEN_SECRET);
   const refreshToken = await sign(payload, c.env.REFRESH_TOKEN_SECRET);

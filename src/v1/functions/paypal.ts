@@ -10,7 +10,7 @@ type Options = {
 
 export async function createOrder(accessToken: string, options: Options) {
   const response = await fetch(
-    "https://api-m.sandbox.paypal.com/v2/checkout/orders",
+    "https://api-m.paypal.com/v2/checkout/orders",
     {
       method: "POST",
       headers: {
@@ -66,7 +66,7 @@ export async function generateAccessToken(
 ) {
   const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
   const response = await fetch(
-    "https://api-m.sandbox.paypal.com/v1/oauth2/token",
+    "https://api-m.paypal.com/v1/oauth2/token",
     {
       method: "POST",
       headers: {

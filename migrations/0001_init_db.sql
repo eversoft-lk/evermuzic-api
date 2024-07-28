@@ -20,10 +20,13 @@ CREATE TABLE "accesstoken" (
 -- CreateTable
 CREATE TABLE "favorite" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "playlist_id" TEXT NOT NULL,
+    "playlist_type" INTEGER NOT NULL,
     "user_id" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL,
-    CONSTRAINT "favorite_playlist_id_fkey" FOREIGN KEY ("playlist_id") REFERENCES "playlist" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT "favorite_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
@@ -80,9 +83,6 @@ CREATE TABLE "Feedback" (
 CREATE INDEX "accesstoken_user_id_idx" ON "accesstoken"("user_id");
 
 -- CreateIndex
-CREATE INDEX "favorite_playlist_id_idx" ON "favorite"("playlist_id");
-
--- CreateIndex
 CREATE INDEX "favorite_user_id_idx" ON "favorite"("user_id");
 
 -- CreateIndex
@@ -96,4 +96,10 @@ CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Donations_email_key" ON "Donations"("email");
+
+-- CreateIndex
+CREATE INDEX "Donations_email_idx" ON "Donations"("email");
 

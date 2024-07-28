@@ -6,3 +6,4 @@ export * from "./notify-me";
 export * from "./playlist";
 export * from "./donate";
 export * from "./feedback";
+export * from "./favorite";

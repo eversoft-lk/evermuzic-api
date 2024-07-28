@@ -51,7 +51,7 @@ app.get("/payment-success", async (c) => {
 
   try {
     const response = await fetch(
-      `https://api-m.sandbox.paypal.com/v2/checkout/orders/${token}/capture`,
+      `https://api-m.paypal.com/v2/checkout/orders/${token}/capture`,
       {
         method: "POST",
         headers: {
@@ -91,6 +91,7 @@ app.get("/payment-success", async (c) => {
       },
       data: {
         amount: payment.amount + parseFloat(amount),
+        createdAt: new Date(),
       },
     });
 
